@@ -2,6 +2,7 @@ package com.alerts;
 
 import com.data_management.DataStorage;
 import com.data_management.Patient;
+import com.data_management.PatientRecord;
 
 /**
  * The {@code AlertGenerator} class is responsible for monitoring patient data
@@ -35,10 +36,26 @@ public class AlertGenerator {
      * @param patient the patient data to evaluate for alert conditions
      */
     public void evaluateData(Patient patient) {
-        
-        
-
+        long currentTime = System.currentTimeMillis();
+        long minuteAgo = currentTime - 60 * 1000; // last minute
+    
+        // Checks records from the last minute
+        for (var record : patient.getRecords(minuteAgo, currentTime)) {
+            String condition = null;
+    
+            if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() > 180) {
+                condition = "High Systolic Pressure";
+            } else if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() < 90) {
+                condition = "Low Systolic Pressure";
+            }
+    
+            if (condition != null) {
+                Alert alert = new Alert(String.valueOf(record.getPatientId()), condition, record.getTimestamp());
+                triggerAlert(alert);
+            }
+        }
     }
+    
 
     /**
      * Triggers an alert for the monitoring system. This method can be extended to

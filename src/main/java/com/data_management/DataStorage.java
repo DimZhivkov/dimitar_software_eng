@@ -84,7 +84,7 @@ public class DataStorage {
      */
     public static void main(String[] args) {
         // DataReader is not defined in this scope, should be initialized appropriately.
-        // DataReader reader = new SomeDataReaderImplementation("path/to/data");
+        DataReader reader = new DataReaderFile("C:\\Users\\dgddi\\dimitar_software_eng\\csvs\\patient_data.csv");
         DataStorage storage = new DataStorage();
 
         // Assuming the reader has been properly initialized and can read data into the
@@ -99,7 +99,7 @@ public class DataStorage {
                     ", Data: " + record.getMeasurementValue() +
                     ", Timestamp: " + record.getTimestamp());
         }
-
+        /* 
         // Initialize the AlertGenerator with the storage
         AlertGenerator alertGenerator = new AlertGenerator(storage);
 
@@ -107,5 +107,6 @@ public class DataStorage {
         for (Patient patient : storage.getAllPatients()) {
             alertGenerator.evaluateData(patient);
         }
+        */
     }
 }
