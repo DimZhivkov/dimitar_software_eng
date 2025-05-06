@@ -36,11 +36,14 @@ public class AlertGenerator {
      * @param patient the patient data to evaluate for alert conditions
      */
     public void evaluateData(Patient patient) {
-        long currentTime = System.currentTimeMillis();
-        long minuteAgo = currentTime - 60 * 1000; // last minute
+        //long currentTime = System.currentTimeMillis();
+        //long minuteAgo = currentTime - 60 * 1000; // last minute
+
+        long currentTime = 200;
+        long minuteAgo = 1; // last minute
     
         // Checks records from the last minute
-        for (var record : patient.getRecords(minuteAgo, currentTime)) {
+        for (PatientRecord record : patient.getRecords(minuteAgo, currentTime)) {
             String condition = null;
     
             if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() > 180) {
@@ -49,9 +52,11 @@ public class AlertGenerator {
                 condition = "Low Systolic Pressure";
             }
     
-            if (condition != null) {
+            if (condition == null) {
                 Alert alert = new Alert(String.valueOf(record.getPatientId()), condition, record.getTimestamp());
                 triggerAlert(alert);
+                System.out.println("no");
+    
             }
         }
     }
@@ -67,5 +72,6 @@ public class AlertGenerator {
      */
     private void triggerAlert(Alert alert) {
         // Implementation might involve logging the alert or notifying staff
+        System.out.println("bruh");
     }
 }

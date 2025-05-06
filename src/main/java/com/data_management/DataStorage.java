@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.alerts.AlertGenerator;
+import java.io.IOException;
+
 
 /**
  * Manages storage and retrieval of patient data within a healthcare monitoring
@@ -84,29 +86,37 @@ public class DataStorage {
      */
     public static void main(String[] args) {
         // DataReader is not defined in this scope, should be initialized appropriately.
-        DataReader reader = new DataReaderFile("C:\\Users\\dgddi\\dimitar_software_eng\\csvs\\patient_data.csv");
+        DataReaderFile reader = new DataReaderFile("C:\\Users\\dgddi\\dimitar_software_eng\\csvs");
         DataStorage storage = new DataStorage();
 
         // Assuming the reader has been properly initialized and can read data into the
         // storage
         // reader.readData(storage);
 
+        try {
+            reader.readData(storage);
+        } catch (IOException e) {
+            System.err.println("Error reading data: " + e.getMessage());
+            return;
+        }
+
         // Example of using DataStorage to retrieve and print records for a patient
-        List<PatientRecord> records = storage.getRecords(1, 1700000000000L, 1800000000000L);
+        List<PatientRecord> records = storage.getRecords(1, 1, 200);
         for (PatientRecord record : records) {
             System.out.println("Record for Patient ID: " + record.getPatientId() +
                     ", Type: " + record.getRecordType() +
                     ", Data: " + record.getMeasurementValue() +
                     ", Timestamp: " + record.getTimestamp());
         }
-        /* 
+        
         // Initialize the AlertGenerator with the storage
         AlertGenerator alertGenerator = new AlertGenerator(storage);
 
         // Evaluate all patients' data to check for conditions that may trigger alerts
-        for (Patient patient : storage.getAllPatients()) {
+        /*for (Patient patient : storage.getAllPatients()) {
             alertGenerator.evaluateData(patient);
-        }
-        */
+        }*/
+
+        alertGenerator.evaluateData(storage.getAllPatients().get(1)); // Example for the first patient
     }
 }
