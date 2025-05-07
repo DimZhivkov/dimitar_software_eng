@@ -27,9 +27,9 @@ public class PatientRecord {
      */
     public PatientRecord(int patientId, double measurementValue, String recordType, long timestamp) {
         this.patientId = patientId;
-        this.measurementValue = measurementValue;
-        this.recordType = recordType;
-        this.timestamp = timestamp;
+        this.measurementValue = measurementValue; // value of record type
+        this.recordType = recordType; // type of measurment (blood pressure)
+        this.timestamp = timestamp; // timestampe
     }
 
     /**

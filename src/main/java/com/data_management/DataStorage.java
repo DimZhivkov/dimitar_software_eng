@@ -99,24 +99,22 @@ public class DataStorage {
             System.err.println("Error reading data: " + e.getMessage());
             return;
         }
-
-        // Example of using DataStorage to retrieve and print records for a patient
-        List<PatientRecord> records = storage.getRecords(1, 1, 200);
+        
+        /*List<PatientRecord> records = storage.getRecords(2, 1, 200);
         for (PatientRecord record : records) {
             System.out.println("Record for Patient ID: " + record.getPatientId() +
                     ", Type: " + record.getRecordType() +
                     ", Data: " + record.getMeasurementValue() +
                     ", Timestamp: " + record.getTimestamp());
-        }
+        }*/
         
         // Initialize the AlertGenerator with the storage
         AlertGenerator alertGenerator = new AlertGenerator(storage);
 
         // Evaluate all patients' data to check for conditions that may trigger alerts
-        /*for (Patient patient : storage.getAllPatients()) {
+        for (Patient patient : storage.getAllPatients()) {
             alertGenerator.evaluateData(patient);
-        }*/
+        }
 
-        alertGenerator.evaluateData(storage.getAllPatients().get(1)); // Example for the first patient
     }
 }

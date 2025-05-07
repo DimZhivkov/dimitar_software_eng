@@ -46,16 +46,16 @@ public class AlertGenerator {
         for (PatientRecord record : patient.getRecords(minuteAgo, currentTime)) {
             String condition = null;
     
-            if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() > 180) {
+            if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() > 120) {
                 condition = "High Systolic Pressure";
-            } else if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() < 90) {
+            }
+            else if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() < 110) {
                 condition = "Low Systolic Pressure";
             }
     
-            if (condition == null) {
-                Alert alert = new Alert(String.valueOf(record.getPatientId()), condition, record.getTimestamp());
+            if (condition != null) {
+                Alert alert = new Alert(String.valueOf(record.getPatientId()), condition, record.getTimestamp(), record.getMeasurementValue());
                 triggerAlert(alert);
-                System.out.println("no");
     
             }
         }
@@ -72,6 +72,6 @@ public class AlertGenerator {
      */
     private void triggerAlert(Alert alert) {
         // Implementation might involve logging the alert or notifying staff
-        System.out.println("bruh");
+        System.out.println(alert.getCondition() + " of (" + alert.getMeasurementValue() + ") for Patient (" + alert.getPatientId() + ") at time (" + alert.getTimestamp() + ")");
     }
 }
