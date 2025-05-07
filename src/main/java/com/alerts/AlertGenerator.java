@@ -11,7 +11,7 @@ import com.data_management.PatientRecord;
  * it against specific health criteria.
  */
 public class AlertGenerator {
-    private DataStorage dataStorage;
+    public DataStorage dataStorage; // fixed yellow underlining when switch to public idk
 
     /**
      * Constructs an {@code AlertGenerator} with a specified {@code DataStorage}.
