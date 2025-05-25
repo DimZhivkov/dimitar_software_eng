@@ -1,9 +1,9 @@
 1,190.5,SystolicPressure,1
-2,125.0,SystolicPressure,2
-3,118.2,SystolicPressure,3
-4,135.6,SystolicPressure,4
-5,140.0,SystolicPressure,5
-6,150.2,SystolicPressure,6
+2,40.0,SystolicPressure,2
+3,18.2,SystolicPressure,3
+4,13,DiastolicPressure,4
+5,140.0,DiastolicPressure,5
+6,150.2,DiastolicPressure,6
 7,110.5,SystolicPressure,7
 8,145.5,SystolicPressure,8
 9,132.1,SystolicPressure,9

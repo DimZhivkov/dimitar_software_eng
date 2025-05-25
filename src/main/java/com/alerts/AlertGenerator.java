@@ -46,11 +46,20 @@ public class AlertGenerator {
         for (PatientRecord record : patient.getRecords(minuteAgo, currentTime)) {
             String condition = null;
     
-            if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() >= 130.0) {
+            if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() > 180.0) {
                 condition = "High Systolic Pressure";
             }
-            else if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() < 130.0) {
+            else if (record.getRecordType().equalsIgnoreCase("SystolicPressure") && record.getMeasurementValue() < 90.0) {
                 condition = "Low Systolic Pressure";
+            }
+            else if (record.getRecordType().equalsIgnoreCase("DiastolicPressure") && record.getMeasurementValue() > 120.0) {
+                condition = "High Diastolic Pressure";
+            }
+            else if (record.getRecordType().equalsIgnoreCase("DiastolicPressure") && record.getMeasurementValue() < 60.0) {
+                condition = "Low Diastolic Pressure";
+            }
+            else if (record.getRecordType().equalsIgnoreCase("OxygenSaturation") && record.getMeasurementValue() < 92.0) {
+                condition = "Low Diastolic Pressure";
             }
     
             if (condition != null) {
