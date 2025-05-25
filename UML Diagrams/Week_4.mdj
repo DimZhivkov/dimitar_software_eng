@@ -1,0 +1,130 @@
+{
+"type": "MDJ",
+"version": "1.0.0",
+"content": \[
+{
+"id": "model1",
+"type": "UMLModel",
+"name": "AlertSystemModel",
+"ownedElements": \[
+{
+"id": "pkg\_alerts",
+"type": "UMLPackage",
+"name": "com.alerts",
+"ownedElements": \[
+{ "id": "cls\_AlertFactory", "type": "UMLClass", "name": "AlertFactory", "isAbstract": true },
+{ "id": "cls\_Alert", "type": "UMLClass", "name": "Alert", "isAbstract": true },
+{ "id": "cls\_BloodPressureAlertFactory", "type": "UMLClass", "name": "BloodPressureAlertFactory" },
+{ "id": "cls\_BloodOxygenAlertFactory", "type": "UMLClass", "name": "BloodOxygenAlertFactory" },
+{ "id": "cls\_ECGAlertFactory", "type": "UMLClass", "name": "ECGAlertFactory" },
+{ "id": "cls\_BloodPressureAlert", "type": "UMLClass", "name": "BloodPressureAlert" },
+{ "id": "cls\_BloodOxygenAlert", "type": "UMLClass", "name": "BloodOxygenAlert" },
+{ "id": "cls\_ECGAlert", "type": "UMLClass", "name": "ECGAlert" }
+]
+},
+{
+"id": "pkg\_strategy",
+"type": "UMLPackage",
+"name": "com.alerts.strategy",
+"ownedElements": \[
+{ "id": "cls\_AlertStrategy", "type": "UMLInterface", "name": "AlertStrategy" },
+{ "id": "cls\_BloodPressureStrategy", "type": "UMLClass", "name": "BloodPressureStrategy" },
+{ "id": "cls\_HeartRateStrategy", "type": "UMLClass", "name": "HeartRateStrategy" },
+{ "id": "cls\_OxygenSaturationStrategy", "type": "UMLClass", "name": "OxygenSaturationStrategy" }
+]
+},
+{
+"id": "pkg\_decorator",
+"type": "UMLPackage",
+"name": "com.alerts.decorator",
+"ownedElements": \[
+{ "id": "cls\_AlertDecorator", "type": "UMLClass", "name": "AlertDecorator", "isAbstract": true },
+{ "id": "cls\_RepeatedAlertDecorator", "type": "UMLClass", "name": "RepeatedAlertDecorator" },
+{ "id": "cls\_PriorityAlertDecorator", "type": "UMLClass", "name": "PriorityAlertDecorator" }
+]
+},
+{
+"id": "pkg\_data",
+"type": "UMLPackage",
+"name": "com.data\_management",
+"ownedElements": \[
+{ "id": "cls\_DataStorage", "type": "UMLClass", "name": "DataStorage", "stereotype": \["singleton"] },
+{ "id": "cls\_HealthDataSimulator", "type": "UMLClass", "name": "HealthDataSimulator", "stereotype": \["singleton"] }
+]
+}
+]
+},
+{
+"id": "gen1",
+"type": "UMLGeneralization",
+"specific": "cls\_BloodPressureAlertFactory",
+"general": "cls\_AlertFactory"
+},
+{
+"id": "gen2",
+"type": "UMLGeneralization",
+"specific": "cls\_BloodOxygenAlertFactory",
+"general": "cls\_AlertFactory"
+},
+{
+"id": "gen3",
+"type": "UMLGeneralization",
+"specific": "cls\_ECGAlertFactory",
+"general": "cls\_AlertFactory"
+},
+{
+"id": "gen4",
+"type": "UMLGeneralization",
+"specific": "cls\_BloodPressureAlert",
+"general": "cls\_Alert"
+},
+{
+"id": "gen5",
+"type": "UMLGeneralization",
+"specific": "cls\_BloodOxygenAlert",
+"general": "cls\_Alert"
+},
+{
+"id": "gen6",
+"type": "UMLGeneralization",
+"specific": "cls\_ECGAlert",
+"general": "cls\_Alert"
+},
+{
+"id": "intfR1",
+"type": "UMLInterfaceRealization",
+"client": "cls\_BloodPressureStrategy",
+"supplier": "cls\_AlertStrategy"
+},
+{
+"id": "intfR2",
+"type": "UMLInterfaceRealization",
+"client": "cls\_HeartRateStrategy",
+"supplier": "cls\_AlertStrategy"
+},
+{
+"id": "intfR3",
+"type": "UMLInterfaceRealization",
+"client": "cls\_OxygenSaturationStrategy",
+"supplier": "cls\_AlertStrategy"
+},
+{
+"id": "gen7",
+"type": "UMLGeneralization",
+"specific": "cls\_AlertDecorator",
+"general": "cls\_Alert"
+},
+{
+"id": "gen8",
+"type": "UMLGeneralization",
+"specific": "cls\_RepeatedAlertDecorator",
+"general": "cls\_AlertDecorator"
+},
+{
+"id": "gen9",
+"type": "UMLGeneralization",
+"specific": "cls\_PriorityAlertDecorator",
+"general": "cls\_AlertDecorator"
+}
+]
+}

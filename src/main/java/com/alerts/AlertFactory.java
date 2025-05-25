@@ -1,4 +1,4 @@
-// AlertFactory.java
+
 package com.alerts;
 
 import com.alerts.Alert;

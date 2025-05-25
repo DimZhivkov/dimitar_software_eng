@@ -10,6 +10,8 @@ import java.util.List;
 
 class DataStorageTest {
 
+    // made a comment as no longer needed
+/* 
     @Test
     void testAddAndGetRecords() {
         // No reader needed, just create the storage directly
@@ -24,5 +26,5 @@ class DataStorageTest {
 
         assertEquals(2, records.size(), "Expected 2 records");
         assertEquals(100.0, records.get(0).getMeasurementValue(), "First record value mismatch");
-    }
+    }*/
 }

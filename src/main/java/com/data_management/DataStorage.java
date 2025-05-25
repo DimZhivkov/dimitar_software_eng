@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import com.alerts.AlertGenerator;
 import java.io.IOException;
+import java.util.*;
+
 
 
 /**
@@ -15,106 +17,56 @@ import java.io.IOException;
  * patient IDs.
  */
 public class DataStorage {
-    private Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
+    // The sole instance
+    private static DataStorage instance;
 
-    /**
-     * Constructs a new instance of DataStorage, initializing the underlying storage
-     * structure.
-     */
-    public DataStorage() {
+    private final Map<Integer, Patient> patientMap;
+
+    // Make constructor private to prevent external instantiation
+    private DataStorage() {
         this.patientMap = new HashMap<>();
     }
 
     /**
-     * Adds or updates patient data in the storage.
-     * If the patient does not exist, a new Patient object is created and added to
-     * the storage.
-     * Otherwise, the new data is added to the existing patient's records.
-     *
-     * @param patientId        the unique identifier of the patient
-     * @param measurementValue the value of the health metric being recorded
-     * @param recordType       the type of record, e.g., "HeartRate",
-     *                         "BloodPressure"
-     * @param timestamp        the time at which the measurement was taken, in
-     *                         milliseconds since the Unix epoch
+     * Returns the single DataStorage instance, creating it if necessary.
      */
-    public void addPatientData(int patientId, double measurementValue, String recordType, long timestamp) {
-        Patient patient = patientMap.get(patientId);
-        if (patient == null) {
-            patient = new Patient(patientId);
-            patientMap.put(patientId, patient);
+    public static synchronized DataStorage getInstance() {
+        if (instance == null) {
+            instance = new DataStorage();
         }
+        return instance;
+    }
+
+    public void addPatientData(int patientId, double measurementValue, String recordType, long timestamp) {
+        Patient patient = patientMap.computeIfAbsent(patientId, Patient::new);
         patient.addRecord(measurementValue, recordType, timestamp);
     }
 
-    /**
-     * Retrieves a list of PatientRecord objects for a specific patient, filtered by
-     * a time range.
-     *
-     * @param patientId the unique identifier of the patient whose records are to be
-     *                  retrieved
-     * @param startTime the start of the time range, in milliseconds since the Unix
-     *                  epoch
-     * @param endTime   the end of the time range, in milliseconds since the Unix
-     *                  epoch
-     * @return a list of PatientRecord objects that fall within the specified time
-     *         range
-     */
     public List<PatientRecord> getRecords(int patientId, long startTime, long endTime) {
         Patient patient = patientMap.get(patientId);
-        if (patient != null) {
-            return patient.getRecords(startTime, endTime);
-        }
-        return new ArrayList<>(); // return an empty list if no patient is found
+        return (patient != null)
+            ? patient.getRecords(startTime, endTime)
+            : Collections.emptyList();
     }
 
-    /**
-     * Retrieves a collection of all patients stored in the data storage.
-     *
-     * @return a list of all patients
-     */
     public List<Patient> getAllPatients() {
         return new ArrayList<>(patientMap.values());
     }
 
-    /**
-     * The main method for the DataStorage class.
-     * Initializes the system, reads data into storage, and continuously monitors
-     * and evaluates patient data.
-     * 
-     * @param args command line arguments
-     */
     public static void main(String[] args) {
-        // DataReader is not defined in this scope, should be initialized appropriately.
+        DataStorage storage = DataStorage.getInstance();
+
         DataReaderFile reader = new DataReaderFile("C:\\Users\\dgddi\\dimitar_software_eng\\csvs");
-        DataStorage storage = new DataStorage();
-
-        // Assuming the reader has been properly initialized and can read data into the
-        // storage
-        // reader.readData(storage);
-
         try {
             reader.readData(storage);
         } catch (IOException e) {
             System.err.println("Error reading data: " + e.getMessage());
             return;
         }
-        
-        /*List<PatientRecord> records = storage.getRecords(2, 1, 200);
-        for (PatientRecord record : records) {
-            System.out.println("Record for Patient ID: " + record.getPatientId() +
-                    ", Type: " + record.getRecordType() +
-                    ", Data: " + record.getMeasurementValue() +
-                    ", Timestamp: " + record.getTimestamp());
-        }*/
-        
-        // Initialize the AlertGenerator with the storage
+
         AlertGenerator alertGenerator = new AlertGenerator(storage);
-
-        // Evaluate all patients' data to check for conditions that may trigger alerts
-        for (Patient patient : storage.getAllPatients()) {
-            alertGenerator.evaluateData(patient);
+        for (Patient p : storage.getAllPatients()) {
+            alertGenerator.evaluateData(p);
         }
-
     }
 }

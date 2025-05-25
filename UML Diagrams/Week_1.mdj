@@ -1,0 +1,72 @@
+{
+"type": "MDJ",
+"version": "1.0.0",
+"content": \[
+{
+"id": "model\_core",
+"type": "UMLModel",
+"name": "CoreSystemModel",
+"ownedElements": \[
+{
+"id": "pkg\_alerts",
+"type": "UMLPackage",
+"name": "com.alerts",
+"ownedElements": \[
+{ "id": "cls\_Alert", "type": "UMLClass", "name": "Alert" },
+{ "id": "cls\_AlertGenerator", "type": "UMLClass", "name": "AlertGenerator" }
+]
+},
+{
+"id": "pkg\_data",
+"type": "UMLPackage",
+"name": "com.data\_management",
+"ownedElements": \[
+{ "id": "intf\_DataReader", "type": "UMLInterface", "name": "DataReader" },
+{ "id": "cls\_DataReaderFile", "type": "UMLClass", "name": "DataReaderFile" },
+{ "id": "cls\_DataStorage", "type": "UMLClass", "name": "DataStorage", "stereotype": \["singleton"] },
+{ "id": "cls\_Patient", "type": "UMLClass", "name": "Patient" },
+{ "id": "cls\_PatientRecord", "type": "UMLClass", "name": "PatientRecord" }
+]
+}
+]
+},
+{
+"id": "rel\_DRImpl",
+"type": "UMLInterfaceRealization",
+"client": "cls\_DataReaderFile",
+"supplier": "intf\_DataReader"
+},
+{
+"id": "rel\_DRUsage",
+"type": "UMLDependency",
+"client": "cls\_DataReaderFile",
+"supplier": "cls\_DataStorage"
+},
+{
+"id": "rel\_AG\_DS",
+"type": "UMLDependency",
+"client": "cls\_AlertGenerator",
+"supplier": "cls\_DataStorage"
+},
+{
+"id": "rel\_AG\_Alert",
+"type": "UMLDependency",
+"client": "cls\_AlertGenerator",
+"supplier": "cls\_Alert"
+},
+{
+"id": "rel\_AG\_Patient",
+"type": "UMLDependency",
+"client": "cls\_AlertGenerator",
+"supplier": "cls\_Patient"
+},
+{
+"id": "rel\_PatientComp\_PR",
+"type": "UMLAssociation",
+"memberEnds": \[
+{ "role": "patient", "type": "cls\_Patient", "aggregation": "composite", "multiplicity": "1" },
+{ "role": "records", "type": "cls\_PatientRecord", "aggregation": "none", "multiplicity": "\*" }
+]
+}
+]
+}
